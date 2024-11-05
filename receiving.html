@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receiving Screen</title>
+  <style>
+    /* Basic page setup */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+    }
+
+    /* Background fading effect */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 1), rgba(169, 169, 169, 1));
+      opacity: 0;
+      animation: fadeIn 3s forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    /* Centered receiving screen */
+    .receive-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.7);
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .receive-screen h2 {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .receive-screen p {
+      font-size: 1.2rem;
+      margin: 20px 0;
+    }
+
+    .receive-screen input {
+      padding: 10px;
+      font-size: 1.2rem;
+      width: 200px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: none;
+      outline: none;
+    }
+
+    .receive-screen button {
+      padding: 10px 20px;
+      background-color: #333;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .receive-screen button:hover {
+      background-color: #555;
+    }
+
+    .message {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      color: green;
+      font-weight: bold;
+    }
+
+    .error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fading background -->
+  <div class="background"></div>
+  
+  <!-- Receiving Screen -->
+  <div class="receive-container">
+    <div class="receive-screen">
+      <h2>Enter Your Casting Code</h2>
+      <p>Paste the code from the Casting Screen below:</p>
+      <input type="text" id="castingCode" placeholder="Enter Code Here">
+      <br>
+      <button onclick="verifyCode()">Verify Code</button>
+      <p class="message" id="message"></p>
+    </div>
+  </div>
+
+  <script>
+    // Predefined casting code for this example (you can replace with dynamic logic later)
+    const validCode = generateRandomCode();
+
+    // Function to generate a random casting code (same as on the casting screen)
+    function generateRandomCode() {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < 6; i++) {
+        code += characters.charAt(Math.floor(Math.random() * characters.length));
+      }
+      return code;
+    }
+
+    // Set a message with the generated code for this session (for testing purposes)
+    window.onload = function() {
+      console.log("Casting Code: ", validCode);  // Output the valid code in the browser console for testing
+    };
+
+    // Verify the inputted code
+    function verifyCode() {
+      const inputCode = document.getElementById('castingCode').value.trim();
+      const messageElement = document.getElementById('message');
+      
+      if (inputCode === validCode) {
+        messageElement.textContent = "Casting screen successfully linked!";
+        messageElement.className = "message";  // Reset to green message class
+      } else {
+        messageElement.textContent = "Invalid code. Please try again.";
+        messageElement.className = "error";  // Apply error class for red color
+      }
+    }
+  </script>
+
+</body>
+</html>
